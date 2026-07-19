@@ -312,7 +312,30 @@ button:focus-visible{
 
 /* ABOUT */
 .about-grid{
-  display:grid; grid-template-columns: 0.8fr 1.2fr; gap: 56px;
+  display:grid; grid-template-columns: 0.62fr 1.38fr; gap: 56px;
+  align-items: start;
+}
+.about-photo-col{ position: sticky; top: 100px; }
+.about-photo-frame{
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  aspect-ratio: 3 / 4;
+}
+.about-photo-frame::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(160deg, rgba(232,163,61,0.16), rgba(14,23,35,0.12) 40%, rgba(82,211,195,0.10));
+  mix-blend-mode: soft-light;
+  pointer-events:none;
+}
+.about-photo{
+  width:100%; height:100%;
+  object-fit: cover;
+  display:block;
+  filter: grayscale(0.25) contrast(1.04) brightness(0.98);
 }
 .about-body p{ color: var(--text-mute); margin-bottom: 16px; max-width: 620px; }
 .about-body strong{ color: var(--text); font-weight: 600; }
@@ -397,29 +420,50 @@ button:focus-visible{
   margin-top: 44px;
   display:grid; grid-template-columns: 1fr 1fr; gap: 24px;
 }
+.projects-grid-3{ grid-template-columns: repeat(3, 1fr); }
 .project-card{
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 30px;
+  display: flex;
+  flex-direction: column;
   transition: transform .25s ease, border-color .25s ease;
 }
 .project-card:hover{ transform: translateY(-4px); border-color: var(--teal); }
+.project-icon{
+  width: 42px; height: 42px;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+.project-icon svg{ width:100%; height:100%; }
 .project-kicker{
   font-family: var(--font-mono); font-size: 11.5px; color: var(--gold);
   letter-spacing: 0.06em; text-transform: uppercase;
 }
-.project-top h3{ margin-top: 10px; font-size: 21px; }
-.project-card p{ color: var(--text-mute); margin-top: 14px; font-size: 15px; }
-.project-points{ margin-top: 16px; }
+.project-top h3{ margin-top: 10px; font-size: 20px; line-height:1.25; }
+.project-card p{ color: var(--text-mute); margin-top: 14px; font-size: 14.5px; }
+.project-points{ margin-top: 16px; flex-grow: 1; }
 .project-points li{
   position:relative; padding-left: 18px; margin-bottom: 8px;
-  color: var(--text-mute); font-size: 14.5px;
+  color: var(--text-mute); font-size: 14px;
 }
 .project-points li::before{
   content:""; position:absolute; left:0; top:8px;
   width:6px; height:6px; border-radius:50%; background: var(--gold);
 }
+.project-link{
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-soft);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--teal);
+  display:flex; align-items:center; gap: 6px;
+  transition: gap .2s ease, color .2s ease;
+}
+.project-link span{ transition: transform .2s ease; }
+.project-link:hover{ color: var(--gold); gap: 10px; }
 
 /* EDUCATION + CERTS */
 .cert-grid{
@@ -438,6 +482,13 @@ button:focus-visible{
 .cert-list li::before{
   content:"✓"; color: var(--teal); font-family: var(--font-mono); font-size: 13px;
 }
+.cert-list li a{
+  color: var(--text-mute);
+  transition: color .2s ease;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.cert-list li a:hover{ color: var(--gold); }
+.cert-link-icon{ font-size: 12px; color: var(--text-faint); }
 
 /* CONTACT */
 .contact{ padding-bottom: 60px; }
@@ -451,7 +502,7 @@ button:focus-visible{
 .contact-sub{ color: var(--text-mute); margin-top: 16px; max-width: 520px; }
 .contact-links{
   margin-top: 36px;
-  display:grid; grid-template-columns: repeat(2,1fr); gap: 18px;
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 18px;
 }
 .contact-link{
   border: 1px solid var(--border); border-radius: 12px;
@@ -476,9 +527,14 @@ button:focus-visible{
 /* =================================================================
    RESPONSIVE
 ================================================================= */
+@media (max-width: 1000px){
+  .projects-grid-3{ grid-template-columns: 1fr 1fr; }
+}
+
 @media (max-width: 900px){
   .hero-inner{ grid-template-columns: 1fr; }
   .about-grid, .skills-grid, .cert-grid{ grid-template-columns: 1fr; gap: 32px; }
+  .about-photo-col{ position: static; max-width: 280px; }
   .projects-grid{ grid-template-columns: 1fr; }
   .contact-links{ grid-template-columns: 1fr; }
   .tl-row{ grid-template-columns: 1fr; gap: 10px; }
